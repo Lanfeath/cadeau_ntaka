@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squid Game Challenge</title>
+    <link rel="stylesheet" href="s.css">
+    <style>
+        /* Basic CSS for simplicity */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1; /* Light snow-like background */
+            color: #333;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            background-color: #111; /* Christmas red */
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            background-image: url('https://www.transparenttextures.com/patterns/https://i.imgur.com/ZLThM1o.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-family: 'Georgia', serif;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 18px;
+            font-style: italic;
+            margin-top: 0;
+        }
+
+        h2 {
+            margin-bottom: 10px; /* Add some space below the h2 */
+        }
+
+        p {
+            margin-top: 10px; /* Add some space above the p */
+        }
+
+                /* Christmas Tree Icon Styling */
+        .enigma-list a {
+            font-size: 20px;
+            display: block;
+            padding: 10px;
+            color: #e60039; /* Forest green */
+            text-decoration: none;
+            margin: 10px 0;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .enigma-list a:hover {
+            background-color: #ff6347; /* Tomato red */
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .enigma-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .enigma-list li {
+            margin: 10px 0;
+        }
+
+        .enigma {
+            background: white;
+            border: 2px solid #ccc;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .indice{
+            font-style: italic;
+            color:#555;
+        }
+
+        input {
+            padding: 5px;
+            margin: 10px;
+        }
+
+        button {
+            background-color: #e60039; /* Forest green */
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #333; /* Dark green */
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .resolved {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black with opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 30px;
+            border: 2px solid #111; /* Christmas red border */
+            width: 80%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* The cards */
+        #the_card {
+            text-align: center; /* Align content to the center */
+            margin-top: 30px; /* Add some spacing from the top */
+        }
+
+        /* Ensure the heading and paragraph behave as block elements */
+        h2 {
+            margin-bottom: 20px; /* Add spacing between the heading and the paragraph */
+            display: block;      /* Ensure block formatting */
+        }
+
+        p {
+            margin-top: 10px; /* Add some spacing above the paragraph */
+            display: block;   /* Ensure block formatting */
+        }
+
+        /* Flexbox layout for the cards */
+        .cards-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Space between cards */
+            flex-wrap: wrap; /* Allow wrapping of cards if the screen is small */
+            margin-top: 20px; /* Space between the heading and the cards */
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        /* Card layout */
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            width: 300px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column; /* Stack the content vertically */
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            background-color: #e43737; /* Christmas red */
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .card-footer {
+            padding: 10px;
+            background-color: #333;
+            text-align: center;
+            font-size: 14px;
+            color: white;
+        }
+
+        /* Body of the card */
+        .card-body {
+            padding: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Christmas decorations */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: fall 10s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { top: -10px; }
+            100% { top: 100vh; }
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #111;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 28px;
+            }
+
+            header p {
+                font-size: 16px;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .modal-content {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 24px;
+            }
+
+            header p {
+                font-size: 14px;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 260px;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Les épreuves Squid Game de Ntaka</h1>
+        <p id="enigmas_count">Enigmes restantes: <span id="remaining-enigmas">3</span></p>
+    </header>
+
+    <div id="the_modals">  
+
+        <ul class="enigma-list">
+            <li><a href="#" id="link1" onclick="openModal(1)">⭕ Quel métal es-tu ?</a></li>
+            <li><a href="#" id="link2" onclick="openModal(2)">🔺 Le code du coffre</a></li>
+            <li><a href="#" id="link3" onclick="openModal(3)">⬛ L’ultime test</a></li>
+        </ul>
+
+        <!-- The Modals -->
+        
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal(1)">&times;</span>
+                <h2>Épreuve 1 : Quel métal es-tu ?</h2>
+                <p>Je suis ce que tu cherches sans cesse,</p>
+                <p>Je disparais dès que tu parles.</p>
+                <p>Qui suis-je ?. </p>
+                <p>Tu peux poser une seule question à un seul garde. Quelle est-elle ?</p>
+                <p class="indice">Indice: je vaux plus que l'qrgent...</p>
+                <input type="text" id="answer1" placeholder="Your answer">
+                <button onclick="checkAnswer(1, 'le silence')">Submit</button>
+            </div>
+        </div>
+
+        <div id="modal2" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal(2)">&times;</span>
+                <h2>Épreuve 2 : Le code du coffre</h2>
+                <p>Un coffre contient un ticket pour la liberté.</p>
+                <p>Il est verrouillé par un code à 3 chiffres.</p>
+
+                <p>Un garde te donne ces indices :</p>
+
+                <p>248 → Un chiffre est bon, mais mal placé.</p>
+
+                <p>385 → Un chiffre est bon, mais bien placé.</p>
+
+                <p>124 → Deux chiffres sont bons, mais mal placés.</p>
+
+                <p>206 → Aucun chiffre n’est bon.</p>
+
+                <p>738 → Un chiffre est bon, mais mal placé.</p>
+
+                <p>🎯 Quel est le code à 3 chiffres ?</p>
+                
+                <p>Indice : pense aux combinaisons logiques qui respectent les contraintes. </p>
+                <input type="text" id="answer2" placeholder="Ex: ***">
+                <button onclick="checkAnswer(2, '481')">Submit</button>
+            </div>
+        </div>
+
+        <div id="modal3" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal(3)">&times;</span>
+                <h2>Épreuve 3 : L’ultime test</h2>
+                <p>Tu es dans une pièce avec deux portes :</p>
+                <p>L'une mène à la liberté, l'autre à l'élimination.</p>
+                <p>Tu peux poser une seule question à un seul garde. Quelle est-elle ?</p>
+                <input type="text" id="answer3" placeholder="Your answer">
+                <button onclick="checkAnswer(3, 'l\'autre')">Submit</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="the_card" class="card-container hidden">
+        <!-- Gift Message -->
+        <div style="display: block;">
+            <h2>🎉 Tu as survécu aux épreuves. Ta récompense : un spectacle..</h2>
+            <p>Il te faudra contacter l'administrateur pour récupérer tes places :)</p>
+        </div>
+    
+        
+    </div>
+
+    <footer>
+        <p>Créé par l'organisation Squid Game (et ton frère 😈)</p>
+    </footer>
+    
+    <script>
+        let enigmasLeft = 3;
+        let answers = ["c", "4835", "nuage"];
+
+        // Disable the link to prevent modal from opening
+        function disableLink(enigmaNumber) {
+            document.getElementById(`link${enigmaNumber}`).onclick = function(event) {
+                event.preventDefault(); // Prevent modal from opening
+            };
+            document.getElementById(`link${enigmaNumber}`).style.color = '#ccc'; // Change link color to indicate it's disabled
+        }
+
+        // Enable the link to allow modal to open again
+        function enableLink(enigmaNumber) {
+            document.getElementById(`link${enigmaNumber}`).onclick = function() {
+                openModal(enigmaNumber);
+            };
+            document.getElementById(`link${enigmaNumber}`).style.color = ''; // Restore original color
+        }
+
+        function openModal(enigmaNumber) {
+            document.getElementById(`modal${enigmaNumber}`).style.display = "block";
+        }
+
+        function closeModal(enigmaNumber) {
+            document.getElementById(`modal${enigmaNumber}`).style.display = "none";
+        }
+
+        function validateAnswer(enigmaNumber, correctAnswer, userAnswer){
+            switch(enigmaNumber) {
+                case 3:
+                    if(userAnswer.includes(correctAnswer)){
+                        return true;
+                    }
+                default:
+                    if (correctAnswer === userAnswer) {   
+                        return true;
+                    }
+            }
+            return false;
+            }
+
+        function checkAnswer(enigmaNumber, correctAnswer) {
+            const userAnswer = document.getElementById(`answer${enigmaNumber}`).value.toLowerCase().trim();
+            if ( validateAnswer(enigmaNumber, correctAnswer, userAnswer)) {
+                closeModal(enigmaNumber);
+                alert(`🎉 Corect! Enigme ${enigmaNumber} résolue! 🎉`);
+                document.getElementById(`modal${enigmaNumber}`).classList.add('resolved');
+                document.getElementById(`answer${enigmaNumber}`).disabled = true;
+                document.querySelector(`#modal${enigmaNumber} button`).disabled = true;
+                enigmasLeft--;
+                document.getElementById("remaining-enigmas").textContent = enigmasLeft;
+
+                // Disable the link after the enigma is solved
+                disableLink(enigmaNumber);
+
+                if (enigmasLeft <= 0) {
+                    // now we have to implement the new voucher to be seen ...
+                    document.getElementById('enigmas_count').classList.add('hidden');
+                    document.getElementById('the_modals').classList.add('hidden');
+                    document.getElementById('the_card').classList.remove('hidden');
+                }
+
+            } else {
+                alert("❌ '" + userAnswer + "' est faux! Essaie encore!");
+            }
+        }
+
+    </script>
+</body>
+</html>
